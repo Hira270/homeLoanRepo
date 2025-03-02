@@ -1,6 +1,6 @@
 package com.homeloan.homeloan.repository;
 
-import com.homeloan.homeloan.model.User;
+import com.homeloan.homeloan.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

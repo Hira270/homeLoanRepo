@@ -8,7 +8,6 @@ import com.homeloan.homeloan.entity.LoanRequest;
 import com.homeloan.homeloan.enums.LoanRequestStatusDetail;
 import com.homeloan.homeloan.exception.IdNotFoundException;
 import com.homeloan.homeloan.mapper.LoanRequestMapper;
-import com.homeloan.homeloan.model.HomeLoan;
 import com.homeloan.homeloan.repository.LoanRequestRepository;
 import com.homeloan.homeloan.service.LoanRequestService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,15 +33,15 @@ public class LoanRequestServiceImpl implements LoanRequestService {
     @Override
     public LoanApplicationReqResponse saveLoanRequest(LoanRequestDetail loanRequestDetail) throws JsonProcessingException {
 
-        String loanRequestJson =null;
+        String loanRequestJson = null;
         ObjectMapper mapper = new ObjectMapper();
-         loanRequestJson = mapper.writeValueAsString(loanRequestDetail);
-        log.info("create loan application mapping :{}",loanRequestJson);
+        loanRequestJson = mapper.writeValueAsString(loanRequestDetail);
+        log.info("create loan application mapping :{}", loanRequestJson);
         LoanRequest loanRequest = loanRequestMapper.mapDomainToEntity(loanRequestDetail);
         LoanRequest result = loanRequestRepository.saveAndFlush(loanRequest);
 
-         loanRequestJson = mapper.writeValueAsString(result);
-        log.info("saving loan application :{}",loanRequestJson);
+        loanRequestJson = mapper.writeValueAsString(result);
+        log.info("saving loan application :{}", loanRequestJson);
 
         return LoanApplicationReqResponse.builder()
                 .loanRequestId(result.getLoanRequestId())
@@ -64,10 +62,10 @@ public class LoanRequestServiceImpl implements LoanRequestService {
         Optional<LoanRequest> loanDetail = loanRequestRepository.findById(loanRequestId);
 
         if (ObjectUtils.isEmpty(loanDetail)) {
-            String exceptionMessage = NO_RECORD_EXIST +" for given id:"+ loanRequestId;
+            String exceptionMessage = NO_RECORD_EXIST + " for given id:" + loanRequestId;
             throw new IdNotFoundException(exceptionMessage);
         }
-       LoanApplicationReqResponse response= LoanApplicationReqResponse.builder()
+        LoanApplicationReqResponse response = LoanApplicationReqResponse.builder()
                 .loanRequestId(loanDetail.get().getLoanRequestId())
                 .status(LoanRequestStatusDetail.valueOf(loanDetail.get().getStatus()))
                 .build();
@@ -79,7 +77,7 @@ public class LoanRequestServiceImpl implements LoanRequestService {
         log.info("find All HomeLoan Request");
         List<LoanRequest> loanDetails = loanRequestRepository.findAll();
         if (ObjectUtils.isEmpty(loanDetails)) {
-            String exceptionMessage = NO_RECORD_EXIST +" for any Loan Request:";
+            String exceptionMessage = NO_RECORD_EXIST + " for any Loan Request:";
             throw new IdNotFoundException(exceptionMessage);
         }
         List<LoanApplicationReqResponse> responses = loanDetails.stream()

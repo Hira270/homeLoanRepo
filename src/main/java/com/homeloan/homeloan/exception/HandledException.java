@@ -20,7 +20,7 @@ public class HandledException {
         HomeLoanError response = null;
         if (ex instanceof IdNotFoundException) {
             response = getHomeLoanError(ex.getMessage(), ErrorCodeEnum.ENTITY_NOT_FOUND.getCode());
-        } else if (ex instanceof  BadRequestException) {
+        } else if (ex instanceof BadRequestException) {
             response = getHomeLoanError(ex.getMessage(), ErrorCodeEnum.PARAMETER_BAD_REQUEST.getCode());
         }
         return response;

@@ -1,11 +1,10 @@
 package com.homeloan.homeloan.exception;
 
-import jakarta.persistence.GeneratedValue;
 import lombok.Builder;
 import org.springframework.http.HttpStatusCode;
 
-import javax.annotation.processing.Generated;
 import java.io.Serializable;
+
 @Builder
 public class ErrorEvent implements Serializable {
     private String id;

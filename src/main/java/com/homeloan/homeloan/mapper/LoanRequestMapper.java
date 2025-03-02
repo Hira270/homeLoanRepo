@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoanRequestMapper {
 
-    public LoanRequest mapDomainToEntity(LoanRequestDetail loanRequestDetail){
-        Applicant applicant=Applicant.builder()
+    public LoanRequest mapDomainToEntity(LoanRequestDetail loanRequestDetail) {
+        Applicant applicant = Applicant.builder()
                 .firstName(loanRequestDetail.getApplicantDetail().getFirstName())
                 .lastName(loanRequestDetail.getApplicantDetail().getLastName())
                 .address(loanRequestDetail.getApplicantDetail().getAddress())

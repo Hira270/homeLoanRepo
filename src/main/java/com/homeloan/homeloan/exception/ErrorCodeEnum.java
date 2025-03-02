@@ -11,11 +11,12 @@ public enum ErrorCodeEnum {
     ENTITY_NOT_FOUND(NO_RECORD_EXIST, 1001),
     PARAMETER_BAD_REQUEST(BAD_REQUEST, 1002);
 
-    private  final List<String> messages;
-    private  final Integer code;
-    ErrorCodeEnum(String msg, Integer code){
-        this.messages= Collections.singletonList(msg);
-        this.code=code;
+    private final List<String> messages;
+    private final Integer code;
+
+    ErrorCodeEnum(String msg, Integer code) {
+        this.messages = Collections.singletonList(msg);
+        this.code = code;
     }
 
     public List<String> getMessages() {

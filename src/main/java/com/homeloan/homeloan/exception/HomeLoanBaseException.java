@@ -1,13 +1,11 @@
 package com.homeloan.homeloan.exception;
 
-public class HomeLoanBaseException extends RuntimeException{
-    public HomeLoanBaseException()
-    {
+public class HomeLoanBaseException extends RuntimeException {
+    public HomeLoanBaseException() {
         super();
     }
 
-    public HomeLoanBaseException(String msg)
-    {
+    public HomeLoanBaseException(String msg) {
         super(msg);
     }
 }

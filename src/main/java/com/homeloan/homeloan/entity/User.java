@@ -1,4 +1,4 @@
-package com.homeloan.homeloan.model;
+package com.homeloan.homeloan.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

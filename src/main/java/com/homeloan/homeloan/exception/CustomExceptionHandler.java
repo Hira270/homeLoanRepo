@@ -37,6 +37,7 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 
     }
+
     @ExceptionHandler(InvalidDataAccessResourceUsageException.class)
     public ResponseEntity<Object> handleInvalidDataAccess(InvalidDataAccessResourceUsageException ex) {
         HomeLoanError response = getHomeLoanError(ErrorCodeEnum.ENTITY_NOT_FOUND.getMessages(), ErrorCodeEnum.ENTITY_NOT_FOUND.getCode());
