@@ -27,6 +27,9 @@ public class HomeLoanDashboardController {
 
     @GetMapping("/{offerId}")
     public Optional<HomeLoanOfferDetails> getHomeLoanOfferDetailsById(@PathVariable Long offerId) {
+
+        log.info("this is else part getHomeLoanOfferDetailsById");
+
         return homeLoanOfferDetailsService.getHomeLoanOfferDetailsById(offerId);
     }
 

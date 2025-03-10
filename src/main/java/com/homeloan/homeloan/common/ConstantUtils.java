@@ -4,6 +4,10 @@ public class ConstantUtils {
     private ConstantUtils() {
     }
 
+    public static final String ADMIN_ROLE = "ADMIN";
+    public static final String USER_ROLE = "USER";
+    public static final String INVALID_TOKEN = "Invalid Token";
+
     //error message
     public static final String NO_RECORD_EXIST = "no record exist";
     public static final String BAD_REQUEST = "bad request";

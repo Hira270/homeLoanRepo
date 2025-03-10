@@ -45,6 +45,7 @@ public class LoanRequestServiceImpl implements LoanRequestService {
 
         return LoanApplicationReqResponse.builder()
                 .loanRequestId(result.getLoanRequestId())
+                .user(result.getUser())
                 .status(LoanRequestStatusDetail.valueOf(result.getStatus()))
                 .build();
     }
@@ -67,6 +68,7 @@ public class LoanRequestServiceImpl implements LoanRequestService {
         }
         LoanApplicationReqResponse response = LoanApplicationReqResponse.builder()
                 .loanRequestId(loanDetail.get().getLoanRequestId())
+                .user(loanDetail.get().getUser())
                 .status(LoanRequestStatusDetail.valueOf(loanDetail.get().getStatus()))
                 .build();
         return response;
@@ -83,6 +85,7 @@ public class LoanRequestServiceImpl implements LoanRequestService {
         List<LoanApplicationReqResponse> responses = loanDetails.stream()
                 .map(loanDetail -> LoanApplicationReqResponse.builder()
                         .loanRequestId(loanDetail.getLoanRequestId())
+                        .user(loanDetail.getUser())
                         .status(LoanRequestStatusDetail.valueOf(loanDetail.getStatus()))
                         .build())
                 .collect(Collectors.toList());

@@ -19,7 +19,6 @@
     <properties>
         <java.version>17</java.version> <!-- Ensuring Java 17 compatibility -->
         <spring-boot.version>3.1.0</spring-boot.version>
-        <!--<jjwt.version>0.11.5</jjwt.version> --> <!-- Latest JWT version -->
         <mysql.version>8.0.33</mysql.version>  <!-- MySQL Connector latest stable version -->
     </properties>
 
@@ -31,11 +30,13 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- ✅ Spring Boot Security -->
+        <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
+        <!-- JWT Library -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -158,6 +159,11 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>5.2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
 

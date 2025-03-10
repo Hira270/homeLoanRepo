@@ -59,5 +59,8 @@ public class LoanRequest {
     @OneToOne(mappedBy = "loanRequest", cascade = CascadeType.ALL)
     private Applicant applicant;
 
-    // Getters and Setters
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }

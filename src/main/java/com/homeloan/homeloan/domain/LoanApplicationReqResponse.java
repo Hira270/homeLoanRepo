@@ -1,5 +1,7 @@
 package com.homeloan.homeloan.domain;
 
+import com.homeloan.homeloan.entity.LoanRequest;
+import com.homeloan.homeloan.entity.User;
 import com.homeloan.homeloan.enums.LoanRequestStatusDetail;
 import lombok.*;
 
@@ -15,7 +17,8 @@ public class LoanApplicationReqResponse implements Serializable {
     @Serial
     private static final long serialVersionUID = -6304335869593920162L;
     private Long loanRequestId;
-    private LoanRequestStatusDetail status;
 
+    private User user;
+    private LoanRequestStatusDetail status;
 
 }
