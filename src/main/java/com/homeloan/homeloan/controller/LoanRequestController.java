@@ -31,9 +31,10 @@ public class LoanRequestController {
     }
 
     @PostMapping(path = "/createLoanRequest")
-    public ResponseEntity<LoanApplicationReqResponse> createRequest(@Valid @RequestBody LoanRequestDetail loanRequestDetail) throws Exception {
+    public ResponseEntity<LoanApplicationReqResponse> createRequest(@Valid @RequestBody LoanRequestDetail loanRequestDetail, @RequestHeader("Authorization") String token) throws Exception {
         log.debug("[createRequest] Begin");
-        return ResponseEntity.status(HttpStatus.CREATED).body(loanRequestService.saveLoanRequest(loanRequestDetail));
+        String username = jwtUtil.extractUsername(token.substring(7));
+        return ResponseEntity.status(HttpStatus.CREATED).body(loanRequestService.saveLoanRequest(loanRequestDetail, username));
     }
 
     @PostMapping(path = "/updateRequest")
@@ -48,7 +49,7 @@ public class LoanRequestController {
         String username = jwtUtil.extractUsername(token.substring(7)); // Extract username from token
         Role role = jwtUtil.extractRole(token.substring(7)); // Extract username from token
         LoanApplicationReqResponse loan = loanRequestService.getLoanRequestDetail(loanRequestId);
-        if (ADMIN_ROLE.equals(role.name()) || loan.getUser().getUsername().equals(username)) {
+        if (ADMIN_ROLE.equals(role.name()) || loan.getUsername().equals(username)) {
             return ResponseEntity.status(HttpStatus.OK).body(loanRequestService.getLoanRequestDetail(loanRequestId));
         }
         //return ResponseEntity.ok(loan);

@@ -18,7 +18,8 @@ public class LoanApplicationReqResponse implements Serializable {
     private static final long serialVersionUID = -6304335869593920162L;
     private Long loanRequestId;
 
-    private User user;
+    private String username;
+    private String name;
     private LoanRequestStatusDetail status;
 
 }

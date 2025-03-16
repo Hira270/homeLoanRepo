@@ -1,23 +1,23 @@
 package com.homeloan.homeloan.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
 @Setter
 @Getter
-@Table(name = "nominee_Details")
-public class NomineeDetails {
+@Builder
+@Table(name = "nominee")
+public class Nominee {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long nomineeId;
-
-    @ManyToOne
-    @JoinColumn(name = "applicant_id")
-    private Applicant applicant;
 
     @Column(name = "first_name")
     private String firstName;
@@ -35,16 +35,21 @@ public class NomineeDetails {
     private String address;
 
     @Column(name = "create_dt")
-    private Date createDt;
+    @CreationTimestamp
+    private Timestamp createDt;
 
     @Column(name = "create_by")
     private String createBy;
 
     @Column(name = "modify_dt")
-    private Date modifyDt;
+    @CreationTimestamp
+    private Timestamp modifyDt;
 
     @Column(name = "modify_by")
     private String modifyBy;
 
-    // Getters and Setters
+    @OneToOne
+    @JoinColumn(name = "applicant_id")
+    private Applicant applicant;
+
 }

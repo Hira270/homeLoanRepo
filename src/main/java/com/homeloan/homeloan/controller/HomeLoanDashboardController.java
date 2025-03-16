@@ -2,6 +2,8 @@ package com.homeloan.homeloan.controller;
 
 
 import com.homeloan.homeloan.entity.HomeLoanOfferDetails;
+import com.homeloan.homeloan.exception.HomeLoanOfferNotFoundException;
+import com.homeloan.homeloan.exception.IdNotFoundException;
 import com.homeloan.homeloan.service.HomeLoanOfferDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +24,23 @@ public class HomeLoanDashboardController {
 
     @GetMapping
     public List<HomeLoanOfferDetails> getAllHomeLoanOffers() {
-        return homeLoanOfferDetailsService.getAllHomeLoanOffers();
+        List<HomeLoanOfferDetails> offerDetails=homeLoanOfferDetailsService.getAllHomeLoanOffers();
+        log.debug("Fetching all available home loan offers.");
+        if(offerDetails.isEmpty())
+        {
+            throw new HomeLoanOfferNotFoundException("No Home loan offers found:");
+        }
+        return offerDetails;
     }
 
     @GetMapping("/{offerId}")
     public Optional<HomeLoanOfferDetails> getHomeLoanOfferDetailsById(@PathVariable Long offerId) {
+        log.debug("Fetching home loan offer details for offerId: {}", offerId);
+        try {
+            return homeLoanOfferDetailsService.getHomeLoanOfferDetailsById(offerId);
 
-        log.info("this is else part getHomeLoanOfferDetailsById");
-
-        return homeLoanOfferDetailsService.getHomeLoanOfferDetailsById(offerId);
+        } catch (Exception ex) {
+            throw new IdNotFoundException("given OfferId is not available");
+        }
     }
-
 }

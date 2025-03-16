@@ -23,9 +23,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        log.info("securityFilterChain HttpSecurity{}", http);
-
-
+        log.debug("Initializing security filter chain configuration...");
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login").permitAll()
@@ -36,6 +34,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Make API stateless
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        log.debug("Security filter chain successfully configured.");
         return http.build();
     }
 }

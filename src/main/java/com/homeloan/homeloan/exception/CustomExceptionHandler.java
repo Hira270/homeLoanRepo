@@ -1,5 +1,6 @@
 package com.homeloan.homeloan.exception;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.management.JMException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -49,4 +51,31 @@ public class CustomExceptionHandler {
     public ResponseEntity<String> handleBadRequest(BadRequestException ex) {
         return new ResponseEntity<>("Bad Request: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input:"+ex.getMessage());
+    }
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<String> handleJwtException(JwtException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT error:"+ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred:"+ex.getMessage());
+    }
+
+    @ExceptionHandler(IdNotFoundException.class)
+    public ResponseEntity<String> handleIdNotFoundException(IdNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input:"+ex.getMessage());
+    }
+
+    @ExceptionHandler(HomeLoanOfferNotFoundException.class)
+    public ResponseEntity<String> handleHomeLoanOfferNotFoundException(HomeLoanOfferNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input:"+ex.getMessage());
+    }
+
+
+
 }

@@ -15,7 +15,7 @@ import java.util.Date;
 public class HomeLoanOfferDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "home_loan_Offer_details_id")
     private Long homeLoanOfferDetailsId;
 
@@ -25,7 +25,7 @@ public class HomeLoanOfferDetails {
     @Column(name = "loan_tenure")
     private String loanTenure;
 
-    @Column(name = "loan_interestRate")
+    @Column(name = "loan_interest_rate")
     private Double loanInterestRate;
 
     @Column(name = "loan_amount")

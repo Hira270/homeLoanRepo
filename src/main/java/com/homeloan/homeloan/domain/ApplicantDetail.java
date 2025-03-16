@@ -1,11 +1,11 @@
 package com.homeloan.homeloan.domain;
 
+import com.homeloan.homeloan.entity.Nominee;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import static com.homeloan.homeloan.common.ConstantUtils.*;
 
@@ -28,6 +28,6 @@ public class ApplicantDetail implements Serializable {
     @NotNull(message = PLEASE_PROVIDE_MOBILE_NUMBER)
     private Long mobileNo;
     private String address;
-    private Timestamp createDt;
-    private Timestamp ModifiedDt;
+    private NomineeDetails nomineeDetails;
+
 }

@@ -2,7 +2,9 @@ package com.homeloan.homeloan.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -14,10 +16,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class LoanRequest {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long loanRequestId;
 
-    @Column(name = "request_loanType")
+    @Column(name = "request_loan_type")
     private String requestLoanType;
 
     @Column(name = "description")
@@ -32,7 +34,7 @@ public class LoanRequest {
     @Column(name = "loan_tenure")
     private String loanTenure;
 
-    @Column(name = "loan_interestRate")
+    @Column(name = "loan_interest_rate")
     private Double loanInterestRate;
 
     @Column(name = "start_date")
@@ -45,13 +47,15 @@ public class LoanRequest {
     private String approvedBy;
 
     @Column(name = "create_dt")
-    private Date createDt;
+    @CreationTimestamp
+    private Timestamp createDt;
 
     @Column(name = "create_by")
     private String createBy;
 
     @Column(name = "modify_dt")
-    private Date modifyDt;
+    @CreationTimestamp
+    private Timestamp modifyDt;
 
     @Column(name = "modify_by")
     private String modifyBy;

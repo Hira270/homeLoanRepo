@@ -7,7 +7,6 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 import static com.homeloan.homeloan.common.ConstantUtils.*;
@@ -21,7 +20,7 @@ public class LoanRequestDetail implements Serializable {
     @Serial
     private static final long serialVersionUID = -3994772458269559553L;
     private Long loanRequestId;
-    private String request_loanType;
+    private String requestLoanType;
     private String description;
     private LoanStatus loanStatus;
     @NotNull(message = PLEASE_PROVIDE_LOAN_TENURE)
@@ -35,8 +34,6 @@ public class LoanRequestDetail implements Serializable {
     @NotNull(message = PLEASE_PROVIDE_END_DATE)
     private Date endDate;
     private String approveBy;
-    private Timestamp createDt;
-    private Timestamp ModifiedDt;
     @Valid
     @NotNull
     private ApplicantDetail applicantDetail;

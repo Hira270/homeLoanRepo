@@ -37,10 +37,13 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7).trim();
+            log.debug("Extracted token: {}", token);
             try {
                 String username = jwtUtil.extractUsername(token);
                 Role role = jwtUtil.extractRole(token);
+                log.debug("Extracted username: {}, role: {}", username, role);
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    log.debug("Creating authentication token for user: {}", username);
                     UserDetails userDetails = new User(username, "",
                             List.of(new SimpleGrantedAuthority("ROLE_" + role.name())));
 
@@ -48,13 +51,17 @@ public class JwtFilter extends OncePerRequestFilter {
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                    log.debug("User {} authenticated successfully with role {}", username, role);
                 }
             } catch (Exception e) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, INVALID_TOKEN);
                 return;
             }
+        } else {
+            log.debug("No Authorization header found or doesn't start with 'Bearer '");
         }
 
         chain.doFilter(request, response);
+        log.debug("JWT authentication completed, proceeding with request.");
     }
 }

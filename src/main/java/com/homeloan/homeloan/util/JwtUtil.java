@@ -1,10 +1,7 @@
 package com.homeloan.homeloan.util;
 
 import com.homeloan.homeloan.enums.Role;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +10,15 @@ import javax.crypto.SecretKey;
 
 import java.util.Base64;
 import java.util.Date;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @Slf4j
 public class JwtUtil {
-    private static final String SECRET_KEY = "Kjhd83jsdf82hsjdFhQ7hsfjshw9dhsfj28sfjsdfh3Fj="; // 32-byte key (for HS256)
+    private static final String SECRET_KEY = "Kjhd83jsdf82hsjdFhQ7hsfjshw9dhsfj28sfjsdfh3Fj=";
+
+    private final Set<String> invalidatedTokens = ConcurrentHashMap.newKeySet();// 32-byte key (for HS256)
     private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
@@ -66,5 +67,26 @@ public class JwtUtil {
             log.error("Error extracting role from token: {}", e.getMessage());
             return null;
         }
+    }
+
+    public boolean isTokenValid(String token) {
+        if (invalidatedTokens.contains(token)) {
+            log.debug("Token is invalid as it has been logged out.");
+            return false;
+        }
+        try {
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            return true;
+        } catch (ExpiredJwtException e) {
+            log.debug("Token expired: {}", e.getMessage());
+        } catch (MalformedJwtException | SignatureException e) {
+            log.debug("Invalid token: {}", e.getMessage());
+        }
+        return false;
+    }
+
+    public void invalidateToken(String token) {
+        invalidatedTokens.add(token);
+        log.debug("Token invalidated successfully.");
     }
 }
