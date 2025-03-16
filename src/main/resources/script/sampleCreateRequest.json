@@ -1,0 +1,27 @@
+{
+  "requestLoanType": "Home Loan",
+  "description": "Home loan for apartment purchase",
+  "loanStatus": "PENDING",
+  "loanTenure": "15 years",
+  "loanAmount": 5000000.0,
+  "loanInterestRate": 7.5,
+  "startDate": "2025-03-01",
+  "endDate": "2040-03-01",
+  "approveBy": "AdminUser",
+  "applicantDetail": {
+    "firstName": "Hira",
+    "lastName": "Kumar",
+    "gender": "Male",
+    "age": 35,
+    "mobileNo": "9876543210",
+    "address": "123 Main Street, Gaya, India",
+    "nomineeDetails":{
+      "nomineeFirstName": "Hitendra",
+      "nomineeLastName": "Kumar",
+      "nomineeGender": "Male",
+      "nomineeAge": 30,
+      "nomineeAddress": "123 Main Street, Gaya, India"
+    }
+
+  }
+}
