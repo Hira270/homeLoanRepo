@@ -4,6 +4,8 @@ import com.homeloan.homeloan.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +21,6 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
     private String password;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 }

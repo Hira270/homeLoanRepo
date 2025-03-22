@@ -1,11 +1,14 @@
 package com.homeloan.homeloan.exception;
 
+import lombok.Getter;
+
 import java.util.Collections;
 import java.util.List;
 
 import static com.homeloan.homeloan.common.ConstantUtils.BAD_REQUEST;
 import static com.homeloan.homeloan.common.ConstantUtils.NO_RECORD_EXIST;
 
+@Getter
 public enum ErrorCodeEnum {
 
     ENTITY_NOT_FOUND(NO_RECORD_EXIST, 1001),
@@ -19,11 +22,4 @@ public enum ErrorCodeEnum {
         this.code = code;
     }
 
-    public List<String> getMessages() {
-        return messages;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
 }

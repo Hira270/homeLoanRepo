@@ -1,9 +1,7 @@
 package com.homeloan.homeloan.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
@@ -13,6 +11,8 @@ import java.util.Date;
 @Setter
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "nominee")
 public class Nominee {
     @Id

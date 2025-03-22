@@ -49,7 +49,7 @@ public class LoanRequestServiceImpl implements LoanRequestService {
         LoanRequest loanRequest = loanRequestMapper.mapDomainToEntity(loanRequestDetail, loggedInUser.get());
         LoanRequest result = loanRequestRepository.saveAndFlush(loanRequest);
 
-        loanRequestJson = mapper.writeValueAsString(result);
+        //loanRequestJson = mapper.writeValueAsString(result);
         log.info("saving loan application :{}", loanRequestJson);
 
         return LoanApplicationReqResponse.builder()

@@ -2,6 +2,9 @@ package com.homeloan.homeloan.controller;
 
 import com.homeloan.homeloan.domain.LoanApplicationReqResponse;
 import com.homeloan.homeloan.entity.LoanRequest;
+import com.homeloan.homeloan.enums.LoanStatus;
+import com.homeloan.homeloan.exception.InvalidStatusException;
+import com.homeloan.homeloan.exception.LoanRequestException;
 import com.homeloan.homeloan.repository.LoanRequestRepository;
 import com.homeloan.homeloan.service.LoanRequestService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,38 +20,58 @@ import java.util.List;
 @Slf4j
 public class HomeLoanApprovalDetailsController {
 
-    @Autowired
-    private LoanRequestService loanRequestService;
+
+    private final LoanRequestService loanRequestService;
+
+
+    private final LoanRequestRepository loanRequestRepository;
 
     @Autowired
-    private LoanRequestRepository loanRequestRepository;
-
-    @Autowired
-    public HomeLoanApprovalDetailsController(LoanRequestService loanRequestService) {
+    public HomeLoanApprovalDetailsController(LoanRequestService loanRequestService, LoanRequestRepository loanRequestRepository) {
         this.loanRequestService = loanRequestService;
+        this.loanRequestRepository = loanRequestRepository;
     }
 
-    // Get all home loan approval details
     @GetMapping
     public ResponseEntity<List<LoanApplicationReqResponse>> getAllHomeLoanApprovals() {
         log.debug("Fetching all home loan approval details.");
-        return ResponseEntity.status(HttpStatus.OK).body(loanRequestService.getLoanRequestDetails());
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(loanRequestService.getLoanRequestDetails());
+        } catch (Exception e) {
+            throw new LoanRequestException("Failed to fetch loan request details");
+        }
     }
 
-
-    // Get home loan approval details by ID
     @GetMapping("/{id}")
     public ResponseEntity<LoanApplicationReqResponse> getHomeLoanApprovalDetailsById(@PathVariable Long id) {
         log.debug("Fetching home loan approval details for loan ID: {}", id);
-        return ResponseEntity.status(HttpStatus.OK).body(loanRequestService.getLoanRequestDetail(id));
+        LoanApplicationReqResponse loan;
+        try {
+            loan = loanRequestService.getLoanRequestDetail(id);
+            if (loan == null) {
+                throw new LoanRequestException("Failed to fetch loan request details for ID: " + id);
+            }
+        } catch (Exception e) {
+            throw new LoanRequestException("Failed to fetch loan request details for ID: " + id);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(loan);
     }
 
     @PutMapping("/{loanRequestId}/{status}")
-    public ResponseEntity<String> updateLoanApprovalStatusById(@PathVariable Long loanRequestId,@PathVariable String status) {
-        log.debug("Fetching all home loan approval details.");
-        LoanRequest loanRequest=loanRequestService.getLoanRequestById(loanRequestId);
-        loanRequest.setStatus(status);
-        loanRequestRepository.saveAndFlush(loanRequest);
-        return ResponseEntity.status(HttpStatus.OK).body("Loan Request Updated Successfully");
+    public ResponseEntity<String> updateLoanApprovalStatusById(@PathVariable Long loanRequestId, @PathVariable String status) {
+        LoanRequest loanRequest = loanRequestService.getLoanRequestById(loanRequestId);
+        if (loanRequest == null) {
+            return new ResponseEntity<>("Loan request not found for ID: " + loanRequestId, HttpStatus.NOT_FOUND);
+        }
+
+        try {
+            // Assuming validStatus is an enum
+            LoanStatus validStatus = LoanStatus.valueOf(status.toUpperCase());
+            loanRequest.setStatus(validStatus.name()); // Use the enum name to ensure consistency
+            loanRequestRepository.saveAndFlush(loanRequest);
+            return new ResponseEntity<>("Loan Request Status Updated Successfully", HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidStatusException("Invalid status: " + status);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.homeloan.homeloan.exception;
 
+import com.homeloan.homeloan.domain.LoanApplicationReqResponse;
 import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
@@ -75,7 +76,23 @@ public class CustomExceptionHandler {
     public ResponseEntity<String> handleHomeLoanOfferNotFoundException(HomeLoanOfferNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input:"+ex.getMessage());
     }
+    @ExceptionHandler(LoanRequestException.class)
+    public ResponseEntity<String> handleLoanRequestException(LoanRequestException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @ExceptionHandler(LoanRequestNotFoundException.class)
+    public ResponseEntity<String> handleLoanRequestNotFoundException(LoanRequestNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<String> handleUnauthorizedAccessException(UnauthorizedAccessException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+    }
 
+    @ExceptionHandler(InvalidStatusException.class)
+    public ResponseEntity<String> handleInvalidStatusException(InvalidStatusException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
 }

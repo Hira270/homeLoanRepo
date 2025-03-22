@@ -5,15 +5,16 @@ import lombok.*;
 
 import java.util.Date;
 
-@Entity
 @Setter
 @Getter
+@Entity
 @Builder
 @Table(name = "home_loan_Offer_details")
 @AllArgsConstructor
 @NoArgsConstructor
 public class HomeLoanOfferDetails {
 
+    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "home_loan_Offer_details_id")
@@ -39,60 +40,4 @@ public class HomeLoanOfferDetails {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    // Getters and Setters
-    public Long getHomeLoanOfferDetailsId() {
-        return homeLoanOfferDetailsId;
-    }
-
-    public void setHomeLoanOfferDetailsId(Long homeLoanOfferDetailsId) {
-        this.homeLoanOfferDetailsId = homeLoanOfferDetailsId;
-    }
-
-    public Double getProcessingFee() {
-        return processingFee;
-    }
-
-    public void setProcessingFee(Double processingFee) {
-        this.processingFee = processingFee;
-    }
-
-    public String getLoanTenure() {
-        return loanTenure;
-    }
-
-    public void setLoanTenure(String loanTenure) {
-        this.loanTenure = loanTenure;
-    }
-
-    public Double getLoanInterestRate() {
-        return loanInterestRate;
-    }
-
-    public void setLoanInterestRate(Double loanInterestRate) {
-        this.loanInterestRate = loanInterestRate;
-    }
-
-    public Double getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(Double loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
 }

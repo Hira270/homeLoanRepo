@@ -5,9 +5,7 @@ import com.homeloan.homeloan.domain.LoginResponse;
 import com.homeloan.homeloan.entity.User;
 import com.homeloan.homeloan.repository.UserRepository;
 import com.homeloan.homeloan.util.JwtUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,15 +16,22 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
-@RequiredArgsConstructor
 @Slf4j
 public class LoginController {
 
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
 
+    public LoginController(JwtUtil jwtUtil, UserRepository userRepository) {
+        this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        if (loginRequest == null) {
+            throw new IllegalArgumentException("please give valid credential");
+        }
         log.debug("Login attempt for username: {}", loginRequest.getUsername());
         Optional<User> user = userRepository.findByUsername(loginRequest.getUsername());
 
@@ -40,6 +45,8 @@ public class LoginController {
             throw new IllegalArgumentException("please give valid credential");
         }
     }
+
+
 
     /*@PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestBody LoginRequest loginRequest, @RequestHeader("Authorization") String token) {
