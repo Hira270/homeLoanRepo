@@ -1,5 +1,6 @@
 package com.homeloan.homeloan.service;
 
+import com.homeloan.homeloan.entity.HomeLoanOffer;
 import com.homeloan.homeloan.entity.HomeLoanOfferDetails;
 
 import java.util.List;
@@ -9,6 +10,6 @@ public interface HomeLoanOfferDetailsService {
 
     Optional<HomeLoanOfferDetails> getHomeLoanOfferDetailsById(Long homeLoanOfferDetailsId);
 
-    List<HomeLoanOfferDetails> getAllHomeLoanOffers();
+    List<HomeLoanOffer> getAllHomeLoanOffers();
 
 }

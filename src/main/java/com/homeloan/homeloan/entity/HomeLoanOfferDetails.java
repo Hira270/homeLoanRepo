@@ -1,5 +1,6 @@
 package com.homeloan.homeloan.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +25,7 @@ public class HomeLoanOfferDetails {
     private Double processingFee;
 
     @Column(name = "loan_tenure")
-    private String loanTenure;
+    private Integer loanTenure;
 
     @Column(name = "loan_interest_rate")
     private Double loanInterestRate;
@@ -39,5 +40,11 @@ public class HomeLoanOfferDetails {
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
+
+    @OneToOne
+    @JoinColumn(name = "home_loan_Offer_id")
+    @JsonBackReference
+    private HomeLoanOffer homeLoanOffer;
+
 
 }

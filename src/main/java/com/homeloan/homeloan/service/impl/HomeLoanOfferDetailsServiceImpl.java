@@ -1,7 +1,9 @@
 package com.homeloan.homeloan.service.impl;
 
+import com.homeloan.homeloan.entity.HomeLoanOffer;
 import com.homeloan.homeloan.entity.HomeLoanOfferDetails;
 import com.homeloan.homeloan.repository.HomeLoanOfferDetailsRepository;
+import com.homeloan.homeloan.repository.HomeLoanOfferRepository;
 import com.homeloan.homeloan.service.HomeLoanOfferDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,12 @@ import java.util.Optional;
 public class HomeLoanOfferDetailsServiceImpl implements HomeLoanOfferDetailsService {
 
     private final HomeLoanOfferDetailsRepository homeLoanOfferDetailsRepository;
+    private final HomeLoanOfferRepository homeLoanOfferRepository;
 
     @Autowired
-    public HomeLoanOfferDetailsServiceImpl(HomeLoanOfferDetailsRepository homeLoanOfferDetailsRepository) {
+    public HomeLoanOfferDetailsServiceImpl(HomeLoanOfferDetailsRepository homeLoanOfferDetailsRepository, HomeLoanOfferRepository homeLoanOfferRepository) {
         this.homeLoanOfferDetailsRepository = homeLoanOfferDetailsRepository;
+        this.homeLoanOfferRepository = homeLoanOfferRepository;
     }
 
     @Override
@@ -25,8 +29,8 @@ public class HomeLoanOfferDetailsServiceImpl implements HomeLoanOfferDetailsServ
     }
 
     @Override
-    public List<HomeLoanOfferDetails> getAllHomeLoanOffers() {
-        return homeLoanOfferDetailsRepository.findAll();
+    public List<HomeLoanOffer> getAllHomeLoanOffers() {
+        return homeLoanOfferRepository.findAll();
     }
 }
 

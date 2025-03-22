@@ -1,6 +1,7 @@
 package com.homeloan.homeloan.controller;
 
 
+import com.homeloan.homeloan.entity.HomeLoanOffer;
 import com.homeloan.homeloan.entity.HomeLoanOfferDetails;
 import com.homeloan.homeloan.exception.HomeLoanOfferNotFoundException;
 import com.homeloan.homeloan.exception.IdNotFoundException;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/loans")
+@RequestMapping("/offer")
 @Slf4j
 public class HomeLoanDashboardController {
 
@@ -26,8 +27,8 @@ public class HomeLoanDashboardController {
     }
 
     @GetMapping
-    public List<HomeLoanOfferDetails> getAllHomeLoanOffers() {
-        List<HomeLoanOfferDetails> offerDetails = homeLoanOfferDetailsService.getAllHomeLoanOffers();
+    public List<HomeLoanOffer> getAllHomeLoanOffers() {
+        List<HomeLoanOffer> offerDetails = homeLoanOfferDetailsService.getAllHomeLoanOffers();
         log.debug("Fetching all available home loan offers.");
         if (offerDetails.isEmpty()) {
             throw new HomeLoanOfferNotFoundException("No Home loan offers found:");
@@ -35,7 +36,7 @@ public class HomeLoanDashboardController {
         return offerDetails;
     }
 
-    /*@GetMapping("/{offerId}")
+    @GetMapping("/{offerId}")
     public Optional<HomeLoanOfferDetails> getHomeLoanOfferDetailsById(@PathVariable Long offerId) {
         log.debug("Fetching home loan offer details for offerId: {}", offerId);
         try {
@@ -44,5 +45,5 @@ public class HomeLoanDashboardController {
         } catch (Exception ex) {
             throw new IdNotFoundException("given OfferId is not available");
         }
-    }*/
+    }
 }

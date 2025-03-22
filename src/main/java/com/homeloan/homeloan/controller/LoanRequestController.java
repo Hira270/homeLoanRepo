@@ -1,6 +1,7 @@
 package com.homeloan.homeloan.controller;
 
 import com.homeloan.homeloan.domain.LoanApplicationReqResponse;
+import com.homeloan.homeloan.domain.LoanDetailResponse;
 import com.homeloan.homeloan.domain.LoanRequestDetail;
 import com.homeloan.homeloan.enums.Role;
 import com.homeloan.homeloan.exception.LoanRequestException;
@@ -54,21 +55,21 @@ public class LoanRequestController {
     }
 
     @GetMapping("/{loanRequestId}")
-    public ResponseEntity<LoanApplicationReqResponse> getRequestDetail(@PathVariable final Long loanRequestId, @RequestHeader("Authorization") String token) throws Exception {
+    public ResponseEntity<LoanDetailResponse> getRequestDetail(@PathVariable final Long loanRequestId, @RequestHeader("Authorization") String token) throws Exception {
         log.debug("fetching request details for requestId-{}", loanRequestId);
-        String username;
+        String username = null;
         Role role;
-        LoanApplicationReqResponse loan;
+        LoanDetailResponse loanDetailResponse=null;
 
         try {
             username = jwtUtil.extractUsername(token.substring(7)); // Extract username from token
             role = jwtUtil.extractRole(token.substring(7)); // Extract role from token
-            loan = loanRequestService.getLoanRequestDetail(loanRequestId);
+            loanDetailResponse = loanRequestService.getLoanRequestDetail(loanRequestId);
         } catch (Exception ex) {
             throw new LoanRequestException("Invalid token or loan request details not found");
         }
 
-        if (ADMIN_ROLE.equals(role.name()) || loan.getUsername().equals(username)) {
+        if (ADMIN_ROLE.equals(role.name()) || loanDetailResponse.getUsername().equals(username)) {
             return ResponseEntity.status(HttpStatus.OK).body(loanRequestService.getLoanRequestDetail(loanRequestId));
         } else {
             throw new LoanRequestException("Unauthorized access");

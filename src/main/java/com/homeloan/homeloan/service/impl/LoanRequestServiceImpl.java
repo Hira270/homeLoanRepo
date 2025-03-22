@@ -2,12 +2,13 @@ package com.homeloan.homeloan.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.homeloan.homeloan.domain.LoanApplicationReqResponse;
-import com.homeloan.homeloan.domain.LoanRequestDetail;
+import com.homeloan.homeloan.domain.*;
 import com.homeloan.homeloan.entity.LoanRequest;
 import com.homeloan.homeloan.entity.User;
 import com.homeloan.homeloan.enums.LoanRequestStatusDetail;
+import com.homeloan.homeloan.enums.LoanType;
 import com.homeloan.homeloan.exception.IdNotFoundException;
+import com.homeloan.homeloan.mapper.LoanDetailMapper;
 import com.homeloan.homeloan.mapper.LoanRequestMapper;
 import com.homeloan.homeloan.repository.LoanRequestRepository;
 import com.homeloan.homeloan.repository.UserRepository;
@@ -34,6 +35,8 @@ public class LoanRequestServiceImpl implements LoanRequestService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private LoanDetailMapper loanDetailMapper;
 
     @Override
     public LoanApplicationReqResponse saveLoanRequest(LoanRequestDetail loanRequestDetail, String username) throws JsonProcessingException {
@@ -66,7 +69,7 @@ public class LoanRequestServiceImpl implements LoanRequestService {
     }
 
     @Override
-    public LoanApplicationReqResponse getLoanRequestDetail(Long loanRequestId) {
+    public LoanDetailResponse getLoanRequestDetail(Long loanRequestId) {
 
         log.info("find Home getHomeLoanById :{}", loanRequestId);
 
@@ -76,13 +79,8 @@ public class LoanRequestServiceImpl implements LoanRequestService {
             String exceptionMessage = NO_RECORD_EXIST + " for given id:" + loanRequestId;
             throw new IdNotFoundException(exceptionMessage);
         }
-        LoanApplicationReqResponse response = LoanApplicationReqResponse.builder()
-                .loanRequestId(loanDetail.get().getLoanRequestId())
-                .username(loanDetail.get().getUser().getUsername())
-                .name(loanDetail.get().getApplicant().getFirstName() + " " + loanDetail.get().getApplicant().getLastName())
-                .status(LoanRequestStatusDetail.valueOf(loanDetail.get().getStatus()))
-                .build();
-        return response;
+
+        return loanDetailMapper.mapEntityToDomain(loanDetail);
     }
 
     @Override

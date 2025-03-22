@@ -1,6 +1,7 @@
 package com.homeloan.homeloan.controller;
 
 import com.homeloan.homeloan.domain.LoanApplicationReqResponse;
+import com.homeloan.homeloan.domain.LoanDetailResponse;
 import com.homeloan.homeloan.entity.LoanRequest;
 import com.homeloan.homeloan.enums.LoanStatus;
 import com.homeloan.homeloan.exception.InvalidStatusException;
@@ -43,9 +44,9 @@ public class HomeLoanApprovalDetailsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LoanApplicationReqResponse> getHomeLoanApprovalDetailsById(@PathVariable Long id) {
+    public ResponseEntity<LoanDetailResponse> getHomeLoanApprovalDetailsById(@PathVariable Long id) {
         log.debug("Fetching home loan approval details for loan ID: {}", id);
-        LoanApplicationReqResponse loan;
+        LoanDetailResponse loan = null;
         try {
             loan = loanRequestService.getLoanRequestDetail(id);
             if (loan == null) {

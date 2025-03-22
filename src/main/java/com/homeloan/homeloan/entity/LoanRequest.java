@@ -1,5 +1,6 @@
 package com.homeloan.homeloan.entity;
 
+import com.homeloan.homeloan.enums.LoanType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,7 +21,7 @@ public class LoanRequest {
     private Long loanRequestId;
 
     @Column(name = "request_loan_type")
-    private String requestLoanType;
+    private String loanType;
 
     @Column(name = "description")
     private String description;
@@ -32,7 +33,7 @@ public class LoanRequest {
     private Double loanAmount;
 
     @Column(name = "loan_tenure")
-    private String loanTenure;
+    private Integer loanTenure;
 
     @Column(name = "loan_interest_rate")
     private Double loanInterestRate;

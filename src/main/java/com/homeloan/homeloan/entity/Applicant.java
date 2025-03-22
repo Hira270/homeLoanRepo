@@ -38,6 +38,8 @@ public class Applicant {
     @Column(name = "mobile_no")
     private Long mobileNo;
 
+    @Column(name = "email")
+    private String email;
     @Column(name = "address")
     private String address;
 

@@ -18,7 +18,7 @@ public class LoanRequestMapper {
 
         LoanRequest loanRequest = LoanRequest.builder()
                 .loanAmount(loanRequestDetail.getLoanAmount())
-                .requestLoanType(loanRequestDetail.getRequestLoanType())
+                .loanType(loanRequestDetail.getLoanType().toString())
                 .loanTenure(loanRequestDetail.getLoanTenure())
                 .approvedBy(loanRequestDetail.getApproveBy())
                 .endDate(loanRequestDetail.getEndDate())
@@ -32,8 +32,6 @@ public class LoanRequestMapper {
                 .build();
         applicantMapping(loanRequest, loanRequestDetail, loggedInUser);
         return loanRequest;
-
-
     }
 
     private void applicantMapping(LoanRequest loanRequest, LoanRequestDetail loanRequestDetail, User loggedInUser) {
@@ -44,6 +42,7 @@ public class LoanRequestMapper {
                 .address(loanRequestDetail.getApplicantDetail().getAddress())
                 .age(loanRequestDetail.getApplicantDetail().getAge())
                 .mobileNo(loanRequestDetail.getApplicantDetail().getMobileNo())
+                .email(loanRequestDetail.getApplicantDetail().getEmail())
                 .gender(loanRequestDetail.getApplicantDetail().getGender())
                 .createBy(loggedInUser.getUsername())
                 .modifyBy(loggedInUser.getUsername())

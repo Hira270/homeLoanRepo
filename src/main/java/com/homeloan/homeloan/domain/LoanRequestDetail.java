@@ -1,6 +1,7 @@
 package com.homeloan.homeloan.domain;
 
 import com.homeloan.homeloan.enums.LoanStatus;
+import com.homeloan.homeloan.enums.LoanType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -20,11 +21,11 @@ public class LoanRequestDetail implements Serializable {
     @Serial
     private static final long serialVersionUID = -3994772458269559553L;
     private Long loanRequestId;
-    private String requestLoanType;
+    private LoanType loanType;
     private String description;
     private LoanStatus loanStatus;
     @NotNull(message = PLEASE_PROVIDE_LOAN_TENURE)
-    private String loanTenure;
+    private Integer loanTenure;
     @NotNull(message = PLEASE_PROVIDE_LOAN_AMOUNT)
     private Double loanAmount;
     @NotNull(message = PLEASE_PROVIDE_LOAN_INTEREST_RATE)

@@ -1,10 +1,10 @@
 {
-  "requestLoanType": "Home Loan",
+  "loanType": "HOME_LOAN",
   "description": "Home loan for apartment purchase",
   "loanStatus": "PENDING",
-  "loanTenure": "15 years",
   "loanAmount": 5000000.0,
-  "loanInterestRate": 7.5,
+  "loanTenure": 20,
+  "loanInterestRate": 8.5,
   "startDate": "2025-03-01",
   "endDate": "2040-03-01",
   "approveBy": "AdminUser",
@@ -14,6 +14,7 @@
     "gender": "Male",
     "age": 35,
     "mobileNo": "9876543210",
+    "email": "test@gamil.com",
     "address": "123 Main Street, Gaya, India",
     "nomineeDetails":{
       "nomineeFirstName": "Hitendra",
@@ -22,6 +23,5 @@
       "nomineeAge": 30,
       "nomineeAddress": "123 Main Street, Gaya, India"
     }
-
   }
 }

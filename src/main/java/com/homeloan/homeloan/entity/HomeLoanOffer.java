@@ -1,5 +1,6 @@
 package com.homeloan.homeloan.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,12 +10,10 @@ import java.sql.Date;
 @Getter
 @Entity
 @Builder
-@Table(name = "home_loan_Offer_details")
+@Table(name = "home_loan_Offer")
 @AllArgsConstructor
 @NoArgsConstructor
 public class HomeLoanOffer {
-
-    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "home_loan_Offer_id")
@@ -25,11 +24,13 @@ public class HomeLoanOffer {
 
     @Column(name = "loan_interest_rate")
     private Double loanInterestRate;
+    @Column(name = "loan_type")
+    private String loanType;
 
     @Column(name = "valid_up_to")
     private Date validUpTo;
-
-
-
+    @OneToOne(mappedBy = "homeLoanOffer", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private HomeLoanOfferDetails homeLoanOfferDetails;
 
 }

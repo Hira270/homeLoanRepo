@@ -2,6 +2,7 @@ package com.homeloan.homeloan.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.homeloan.homeloan.domain.LoanApplicationReqResponse;
+import com.homeloan.homeloan.domain.LoanDetailResponse;
 import com.homeloan.homeloan.domain.LoanRequestDetail;
 import com.homeloan.homeloan.entity.LoanRequest;
 
@@ -13,7 +14,7 @@ public interface LoanRequestService {
 
     LoanApplicationReqResponse updateLoanRequest(LoanRequestDetail loanRequestDetail);
 
-    LoanApplicationReqResponse getLoanRequestDetail(Long loanRequestId);
+    LoanDetailResponse getLoanRequestDetail(Long loanRequestId);
 
     List<LoanApplicationReqResponse> getLoanRequestDetails();
 

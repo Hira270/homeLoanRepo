@@ -17,7 +17,6 @@ import static com.homeloan.homeloan.common.ConstantUtils.*;
 public class ApplicantDetail implements Serializable {
     @Serial
     private static final long serialVersionUID = -8763663076390288296L;
-    private Long applicantId;
     @NotNull(message = PLEASE_PROVIDE_FIRST_NAME)
     private String firstName;
     @NotNull(message = PLEASE_PROVIDE_LAST_NAME)
@@ -27,6 +26,7 @@ public class ApplicantDetail implements Serializable {
     private int age;
     @NotNull(message = PLEASE_PROVIDE_MOBILE_NUMBER)
     private Long mobileNo;
+    private String email;
     private String address;
     private NomineeDetails nomineeDetails;
 
