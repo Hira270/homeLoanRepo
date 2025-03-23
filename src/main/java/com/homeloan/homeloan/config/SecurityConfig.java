@@ -24,12 +24,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         log.debug("Initializing security filter chain configuration...");
-        http.csrf(AbstractHttpConfigurer::disable)
+        http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/home-loan-approval-details/**").hasRole(ADMIN_ROLE)
-                        .requestMatchers("/loans/**").hasAnyRole(USER_ROLE, ADMIN_ROLE)
                         .requestMatchers("/request/**").hasAnyRole(USER_ROLE, ADMIN_ROLE)
+                        .requestMatchers("/offers/**").hasAnyRole(USER_ROLE, ADMIN_ROLE)
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Make API stateless

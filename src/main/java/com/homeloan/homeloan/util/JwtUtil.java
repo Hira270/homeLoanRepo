@@ -1,14 +1,14 @@
 package com.homeloan.homeloan.util;
 
+import com.homeloan.homeloan.entity.User;
 import com.homeloan.homeloan.enums.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import javax.crypto.SecretKey;
 
-import java.util.Base64;
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,13 +19,14 @@ public class JwtUtil {
     private static final String SECRET_KEY = "Kjhd83jsdf82hsjdFhQ7hsfjshw9dhsfj28sfjsdfh3Fj=";
 
     private final Set<String> invalidatedTokens = ConcurrentHashMap.newKeySet();// 32-byte key (for HS256)
+
     private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String generateToken(String username, Role role) {
-        log.info("generateToken username{} role{}",username,role);
+        log.info("generateToken username{} role{}", username, role);
         return Jwts.builder()
                 .setSubject(username)
                 .claim("role", role.name())
@@ -88,5 +89,10 @@ public class JwtUtil {
     public void invalidateToken(String token) {
         invalidatedTokens.add(token);
         log.debug("Token invalidated successfully.");
+    }
+
+    public boolean validateToken(String token, User user) {
+        final String username = extractUsername(token);
+        return (username.equals(user.getUsername()) && !isTokenValid(token));
     }
 }
